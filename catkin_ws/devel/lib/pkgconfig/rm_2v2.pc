@@ -1,0 +1,8 @@
+prefix=/home/sunshihao/catkin_ws/devel
+
+Name: rm_2v2
+Description: Description of rm_2v2
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

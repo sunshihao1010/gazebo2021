@@ -1,0 +1,8 @@
+prefix=/home/sunshihao/catkin_ws/devel
+
+Name: rm_description
+Description: Description of rm_description
+Version: 0.0.0
+Cflags: -I/home/sunshihao/catkin_ws/devel/include
+Libs: -L${prefix}/lib 
+Requires: 

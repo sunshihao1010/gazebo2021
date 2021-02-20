@@ -1,0 +1,8 @@
+prefix=/home/sunshihao/catkin_ws/install
+
+Name: single_2101t
+Description: Description of single_2101t
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

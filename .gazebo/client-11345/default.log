@@ -1,0 +1,16 @@
+Gazebo multi-robot simulator, version 9.16.0
+Copyright (C) 2012 Open Source Robotics Foundation.
+Released under the Apache 2 License.
+http://gazebosim.org
+
+
+(1613740977 254656572) [Msg] Waiting for master.
+(1613740977 261161776) [Msg] Connected to gazebo master @ http://127.0.0.1:11345
+(1613740977 261197569) [Msg] Publicized address: 192.168.0.105
+(1613740977 261399315) Loaded .ini file from: "/home/sunshihao/.gazebo/gui.ini"
+(1613740977 485529869) Invalid filename or directory["/home/sunshihao/catkin_ws/src/mbot_gazebo/worlds/Robomaster.world"] in GAZEBO_MODEL_PATH. It's not a good idea to put extra files in a GAZEBO_MODEL_PATH because the file structure may be modified by Gazebo.
+(1613740977 485662033) Invalid filename or directory["/home/sunshihao/catkin_ws/src/mbot_gazebo/worlds/model.config"] in GAZEBO_MODEL_PATH. It's not a good idea to put extra files in a GAZEBO_MODEL_PATH because the file structure may be modified by Gazebo.
+(1613740977 485787283) Invalid filename or directory["/home/sunshihao/catkin_ws/src/mbot_gazebo/worlds/model.sdf"] in GAZEBO_MODEL_PATH. It's not a good idea to put extra files in a GAZEBO_MODEL_PATH because the file structure may be modified by Gazebo.
+(1613740977 485908206) Invalid filename or directory["/home/sunshihao/catkin_ws/src/mbot_gazebo/worlds/playground.world"] in GAZEBO_MODEL_PATH. It's not a good idea to put extra files in a GAZEBO_MODEL_PATH because the file structure may be modified by Gazebo.
+(1613740977 663514441) [Wrn] [Event.cc:61] Warning: Deleting a connection right after creation. Make sure to save the ConnectionPtr from a Connect call
+(1613740977 972523339) No spacenav daemon found. Spacenav functionality is disabled

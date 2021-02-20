@@ -1,0 +1,2 @@
+mbot_description:myurdf:robot_gazebo:teleop_twist_keyboard
+-DCATKIN_DEVEL_PREFIX=/home/sunshihao/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/sunshihao/catkin_ws/install -G Unix Makefiles

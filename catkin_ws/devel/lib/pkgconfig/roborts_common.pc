@@ -1,0 +1,8 @@
+prefix=/home/sunshihao/catkin_ws/devel
+
+Name: roborts_common
+Description: Description of roborts_common
+Version: 1.0.0
+Cflags: -I/home/sunshihao/catkin_ws/src/RoboRTS/roborts_common/include
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>allians_arbotix</name>
+  <version>0.0.0</version>
+  <description>The allians_arbotix package</description>
+  <maintainer email="zhengjie@allians.com.cn">zj</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <export>
+  </export>
+</package>

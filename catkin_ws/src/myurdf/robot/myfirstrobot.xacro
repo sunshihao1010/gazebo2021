@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<robot name="myfirstrobot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="mass" value="1" /> <!-- arbitrary value for mass -->
+  <xacro:property name="width" value="0.1" /> <!-- Square dimensions (widthxwidth) of beams -->
+  <xacro:property name="height1" value="4" /> <!-- Link 1 -->
+  <xacro:property name="height2" value="2" /> <!-- Link 2 -->
+  <xacro:property name="height3" value="1" /> <!-- Link 3 -->
+
+    <!-- Import Rviz colors -->
+  <xacro:include filename="$(find myurdf)/robot/materials.xacro" />
+
+    <!-- Base Link -->
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="${width} ${width} ${height1}"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 ${height1/2}"/>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="${height1}" radius="${width+0.1}"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 ${height1/2}"/>
+        </collision>
+        <inertial>
+      <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+            ixx="${mass / 12.0 * (width*width + height1*height1)}" ixy="0.0" ixz="0.0"
+            iyy="${mass / 12.0 * (height1*height1 + width*width)}" iyz="0.0"
+            izz="${mass / 12.0 * (width*width + width*width)}"/>
+        </inertial>
+    </link>
+
+    <joint name="joint1" type="continuous">
+        <parent link="base_link"/>
+        <child link="middle_link"/>
+        <origin rpy="0 0 0" xyz="0 0 ${height1}"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <link name="middle_link">
+        <visual>
+            <geometry>
+                <box size="${width} ${width} ${height2}"/>
+            </geometry>
+            <origin rpy="0 ${PI/2} 0" xyz="${height2/2} 0 0"/>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="${height2}" radius="${width+0.1}"/>
+            </geometry>
+            <origin rpy="0 ${PI/2} 0" xyz="${height2/2} 0 0"/>
+        </collision>
+        <inertial>
+      <origin xyz="${height2/2} 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+            ixx="${mass / 12.0 * (width*width + width*width)}" ixy="0.0" ixz="0.0"
+            iyy="${mass / 12.0 * (height2*height2 + width*width)}" iyz="0.0"
+            izz="${mass / 12.0 * (width*width + height2*height2)}"/>       
+        </inertial>
+    </link>
+
+    <joint name="joint2" type="continuous">
+        <parent link="middle_link"/>
+        <child link="top_link"/>
+        <origin rpy="0 0 0" xyz="${height2} 0 0"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <link name="top_link">
+        <visual>
+            <geometry>
+                <box size="${width} ${width} ${height3}"/>
+            </geometry>
+            <origin rpy="0 ${PI/2} 0" xyz="${height3/2} 0 0"/>
+            <material name="orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="${height3}" radius="${width+0.1}"/>
+            </geometry>
+            <origin rpy="0 ${PI/2} 0" xyz="${height3/2} 0 0"/>
+        </collision>
+        <inertial>
+      <origin xyz="${height3/2} 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+            ixx="${mass / 12.0 * (width*width + width*width)}" ixy="0.0" ixz="0.0"
+            iyy="${mass / 12.0 * (height3*height3 + width*width)}" iyz="0.0"
+            izz="${mass / 12.0 * (width*width + height3*height3)}"/>
+        </inertial>
+    </link>
+
+    <joint name="end" type="revolute">
+        <axis xyz="1 0 0"/>
+        <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+        <parent link="top_link"/>
+        <child link="end_link"/>
+        <origin rpy="0 0 0" xyz="${height3} 0 0"/>
+    </joint>
+
+    <link name="end_link">
+        <visual>
+            <geometry>
+                <sphere radius="${width}"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="${width+0.05}"/>
+            </geometry>
+        </collision>
+        <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+            ixx="${mass / 12.0 * (width*width + width*width)}" ixy="0.0" ixz="0.0"
+            iyy="${mass / 12.0 * (width*width + width*width)}" iyz="0.0"
+            izz="${mass / 12.0 * (width*width + width*width)}"/>
+        </inertial>
+    </link>
+</robot>

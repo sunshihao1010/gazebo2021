@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot name="arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find mbot_description)/urdf/xacro/gazebo/mbot_base_gazebo.xacro" />
+    <xacro:include filename="$(find mbot_description)/urdf/xacro/sensors/camera_gazebo.xacro" />
+
+    
+    
+
+    <usb_camera prefix="camera"/>
+
+    <mbot_base_gazebo/>
+
+</robot>
+

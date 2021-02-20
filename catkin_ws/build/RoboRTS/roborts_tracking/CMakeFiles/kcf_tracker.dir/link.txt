@@ -1,0 +1,2 @@
+/usr/bin/ar qc /home/sunshihao/catkin_ws/devel/lib/libkcf_tracker.a  CMakeFiles/kcf_tracker.dir/KCFcpp/src/fhog.cpp.o CMakeFiles/kcf_tracker.dir/KCFcpp/src/kcftracker.cpp.o
+/usr/bin/ranlib /home/sunshihao/catkin_ws/devel/lib/libkcf_tracker.a
