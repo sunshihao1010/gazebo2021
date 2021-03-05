@@ -1,5 +1,8 @@
 <?xml version="1.0" ?>
-<robot name="swivel" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="/swivel" xmlns:xacro="http://www.ros.org/wiki/xacro"
+xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+    xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+    xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
 
   <!--property list -->
   <xacro:property name="M_PI" value="3.141592"/>
@@ -53,20 +56,22 @@
  <!--Macro for the base1 -->
   <xacro:macro name="base1">
     <joint name="swivel_J0" type="revolute"> 
-        <origin xyz="-0.05 0 ${base_height/2 + rplidar_length/2}" rpy="0 0 0" />
+        <origin xyz="-0.05 0 0.15" rpy="0 0 0" />
         <parent link="base_link"/>
         <child link="yaw_Link"/>
         <axis xyz="0 0 1" />
-        <limit lower="-3" upper="3" effort="15.0" velocity="15.0" />
+        <!--<limit lower="-3" upper="3" effort="15.0" velocity="15.0" />-->
+        <limit lower="-0.785" upper="0.785" effort="10.0" velocity="1.0" />
+        <joint_properties damping="0.0" friction="0.0"/>
     </joint>
          <link name="yaw_Link"> 
-            <inertial>
-                <mass value="0.1" />
+             <!--<inertial>
+                <mass value="4" />
                 <origin xyz="0 0 0" />
-                <inertia ixx="0.01" ixy="0.0" ixz="0.0"
-                         iyy="0.01" iyz="0.0"
-                         izz="0.01" />
-            </inertial>
+                <inertia ixx="4.0" ixy="0.0" ixz="0.0"
+                         iyy="4.0" iyz="0.0"
+                         izz="4.0" />
+            </inertial>-->
 
             <visual>
                 <origin xyz=" 0 0 0 " rpy="0 0 0" />
@@ -82,12 +87,13 @@
                     <cylinder length="0.2" radius="0.025"/>
                 </geometry>
             </collision>
+         <cylinder_inertial_matrix  m="1" r="0.025" h="0.2" />
         </link>
-        <gazebo reference=yaw_Link">
+       <!-- <gazebo reference=yaw_Link">
             <material>Gazebo/Black</material>
-        </gazebo>
+        </gazebo>-->
 
-    <transmission name="tran1"> 
+   <transmission name="tran1"> 
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="swivel_J0">
       <hardwareInterface>EffortJointInterface</hardwareInterface>
@@ -102,11 +108,11 @@
 <!--Macro for the base2 -->
   <xacro:macro name="base2">
      <joint name="swivel_J1" type="revolute">
-       <origin xyz="-0.02 0 0.16"/>
+       <origin xyz="0.04 0 0.05"/>
        <parent link="yaw_Link"/>
        <child link="pitch_Link"/>
-    <axis xyz="1 0 0" />
-    <limit lower="-0.785" upper="0.785" effort="1.0" velocity="1.0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.785" upper="0.785" effort="10.0" velocity="1.0" />
     <joint_properties damping="0.0" friction="0.0"/>
      </joint>
  
@@ -151,6 +157,7 @@
     </plugin>
   </gazebo>-->
   </xacro:macro>
+
   <!--Macro for the wheel -->
   <xacro:macro name="wheel" params="prefix1 prefix2 reflect1 reflect2">
      <joint name="${prefix1}_${prefix2}_wheel_joint" type="continuous">
@@ -174,6 +181,14 @@
                <cylinder radius="${wheel_radius}" length = "${wheel_length}"/>
            </geometry>
       </collision>
+      <surface>
+          <friction>
+            <ode>
+              <mu>0.1</mu>
+              <mu2>0.1</mu2>       
+            </ode>
+          </friction>
+        </surface>
       <cylinder_inertial_matrix  m="${wheel_mass}" r="${wheel_radius}" h="${wheel_length}" />
      </link>
     
@@ -185,10 +200,12 @@
      <transmission name="${prefix1}_${prefix2}_wheel_joint_trans">
          <type>transmission_interface/SimpleTransmission</type>
          <joint name="${prefix1}_${prefix2}_wheel_joint" >
-             <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+             <!--<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>-->
+             <hardwareInterface>EffortJointInterface</hardwareInterface>
          </joint>
          <actuator name="${prefix1}_${prefix2}_wheel_joint_motor">
-             <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+             <!--<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>-->
+             <hardwareInterface>EffortJointInterface</hardwareInterface>
              <mechanicalReduction>1</mechanicalReduction>
          </actuator>
       </transmission>
@@ -239,14 +256,15 @@
 
    <!-- controller -->
 <gazebo>
-  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+  <!--<plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">-->
+  <plugin name="mecanum_controller" filename="libgazebo_ros_planar_move.so">
       <rosDebugLevel>Debug</rosDebugLevel> 
        <publishWheelTF>true</publishWheelTF>
        <publishTf>1</publishTf>
        <publishWheelJointState>true</publishWheelJointState> 
        <alwaysOn>true</alwaysOn> 
     <updateRate>100.0</updateRate>
-    <robotNamespace>/</robotNamespace>
+    <robotNamespace>/swivel</robotNamespace>
     <leftFrontJoint>left_front_wheel_joint</leftFrontJoint>
     <rightFrontJoint>right_front_wheel_joint</rightFrontJoint>
     <leftRearJoint>left_back_wheel_joint</leftRearJoint>
@@ -255,12 +273,13 @@
     <wheelDiameter>${2*wheel_radius}</wheelDiameter>
     <broadcastTF>1</broadcastTF> 
     <robotBaseFrame>base_footprint</robotBaseFrame>
-    <torque>20</torque>
+    <torque>2</torque>
     <commandTopic>cmd_vel</commandTopic>
     <odometryFrame>odom</odometryFrame> 
     <odometryTopic>odom</odometryTopic>
    </plugin>
 </gazebo>
+
 <!-- ros_control plugin 
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
@@ -407,15 +426,15 @@
             </sensor>
         </gazebo>
     </xacro:macro>
-
 <gazebo>
       <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-         <robotNamespace>/swivel/swivel</robotNamespace>
+         <robotNamespace>/swivel</robotNamespace>
         <controlPeriod>0.01</controlPeriod>
         <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
         <legacyModeNS>true</legacyModeNS>
       </plugin>
 </gazebo>
+
     <mbot_base_gazebo/>
     <base1/>
     <base2/>

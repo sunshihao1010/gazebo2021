@@ -1,0 +1,13 @@
+catkin_make
+source ./devel/setup.bash
+roslaunch mbot_description mbot.launch
+rqt_image_view 打开摄像头
+rosrun rviz rviz 查看雷达信息
+
+rostopic pub -1 /swivel/cmd_vel geometry_msgs/Twist '{linear: {x: 0.5, y: 0, z: 0}, angular: {x: 0, y: 0, z: 0}}'
+rostopic pub -1 /swivel/cmd_vel geometry_msgs/Twist '{linear: {x: -0.5, y: 0, z: 0}, angular: {x: 0, y: 0, z: 0}}'
+rostopic pub -1 /swivel/cmd_vel geometry_msgs/Twist '{linear: {x: 0, y: 0.5, z: 0}, angular: {x: 0, y: 0, z: 0}}'
+rostopic pub -1 /swivel/cmd_vel geometry_msgs/Twist '{linear: {x: 0, y: -0.5, z: 0}, angular: {x: 0, y: 0, z: 0}}'
+rostopic pub -1 /swivel/swiveljoint1_position_controller/command std_msgs/Float64 "data: 1.5"
+rostopic pub -1 /swivel/swiveljoint2_position_controller/command std_msgs/Float64 "data: 1.5" 
+rostopic pub -1 /swivel/swiveljoint_position_controller/command std_msgs/Float64MultiArray '{data: [1.5, 0]}'

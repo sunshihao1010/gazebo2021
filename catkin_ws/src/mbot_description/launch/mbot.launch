@@ -17,7 +17,7 @@
     </include>
 
     
-    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find mbot_description)/urdf/xacro/gazebo/mbot_base_gazebo.xacro'" /> 
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find mbot_description)/urdf/xacro/gazebo/mbot_base_gazebo.xacro'" />  
 
     
     <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" ></node> 
@@ -29,11 +29,11 @@
 
    
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-          args="-urdf -model mrobot -param robot_description"/> 
+          args="-urdf -model /swivel -param robot_description"/> 
+ <rosparam file="$(find mbot_description)/config/gimbal.yaml" command="load"/>
+<!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/swivel" args="swiveljoint_state_controller swiveljoint1_position_controller swiveljoint2_position_controller  --shutdown-timeout 3"/>
 
-<rosparam file="$(find mbot_description)/config/gimbal.yaml" command="load"/>
-
-<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" ns="/swivel/swivel" args="swiveljoint_state_controller swiveljoint1_position_controller swiveljoint2_position_controller  --shutdown-timeout 3"/>
 </launch>
 

@@ -1,0 +1,8 @@
+prefix=/home/sunshihao/catkin_ws/install
+
+Name: infantryb
+Description: Description of infantryb
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

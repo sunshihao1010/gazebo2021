@@ -131,10 +131,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/sunshihao/catkin_ws/build/gtest/cmake_install.cmake")
-  include("/home/sunshihao/catkin_ws/build/teleop_twist_keyboard/cmake_install.cmake")
-  include("/home/sunshihao/catkin_ws/build/robot_gazebo/cmake_install.cmake")
-  include("/home/sunshihao/catkin_ws/build/mbot_description/cmake_install.cmake")
-  include("/home/sunshihao/catkin_ws/build/myurdf/cmake_install.cmake")
+  include("/home/sunshihao/catkin_ws/build/transfer/cmake_install.cmake")
 
 endif()
 

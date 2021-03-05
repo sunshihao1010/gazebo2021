@@ -1,4 +1,4 @@
-swivel:
+swivel/:
     # Publish all joint states -----------------------------------
   swiveljoint_state_controller:
     type: joint_state_controller/JointStateController
@@ -13,3 +13,25 @@ swivel:
     type: effort_controllers/JointPositionController
     joint: swivel_J1
     pid: {p: 100.0, i: 0, d: 0}
+
+/gazebo_ros_control:
+  pid_gains:
+      left_front_wheel_joint:
+          p: 100.0
+          i: 0.01
+          d: 10.0
+
+      left_back_wheel_joint:
+          p: 100.0
+          i: 0.01
+          d: 10.0
+
+      right_front_wheel_joint:
+          p: 100.0
+          i: 0.01
+          d: 10.0
+
+      right_back_wheel_joint:
+          p: 100.0
+          i: 0.01
+          d: 10.0
